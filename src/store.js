@@ -22,6 +22,10 @@ export const useCongfiguratorStore = create((set) => ({
       sort: "-created",
     });
 
+    categories.forEach((category) => {
+      category.assets = assets.filter((asset) => asset.group === category.id);
+    });
+
     set({ categories, currentCategory: categories[0], assets });
   },
   setCurrentCategory: (category) => set({ currentCategory: category }),
