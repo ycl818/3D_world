@@ -2,9 +2,18 @@ import React, { useEffect } from "react";
 import { pb, useCongfiguratorStore } from "../store";
 
 const AssetBox = () => {
-  const { categories, currentCategory, setCurrentCategory, fetchCategories } =
-    useCongfiguratorStore();
+  const {
+    categories,
+    currentCategory,
+    setCurrentCategory,
+    fetchCategories,
+    customization,
+    changeAsset,
+  } = useCongfiguratorStore();
 
+  if (customization) {
+    console.log("🚀 ~ AssetBox ~ customization:", customization);
+  }
   useEffect(() => {
     fetchCategories();
   }, []);
@@ -30,10 +39,15 @@ const AssetBox = () => {
         {currentCategory?.assets?.map((asset) => (
           <button
             key={asset.thumbnail}
-            className="w-20 h-20 rounded-md overflow-hidden bg-gray-200
+            onClick={() => changeAsset(currentCategory.name, asset)}
+            className={`w-20 h-20 rounded-md overflow-hidden bg-gray-200
             pointer-events-auto hover:opacity-100 transition-all duration-500
-            border-2
-            "
+            border-2 
+            ${
+              customization[currentCategory.name]?.asset?.id === asset.id
+                ? "border-indigo-600 opacity-100"
+                : "opacity-70 border-transparent"
+            }`}
           >
             <img src={pb.files.getUrl(asset, asset.thumbnail)} />
           </button>
