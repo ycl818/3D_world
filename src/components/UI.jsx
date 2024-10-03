@@ -29,7 +29,7 @@ const AssetBox = () => {
       <div className="flex gap-2 flex-wrap">
         {currentCategory?.assets?.map((asset) => (
           <button
-            key={asset.id}
+            key={asset.thumbnail}
             className="w-20 h-20 rounded-md overflow-hidden bg-gray-200
             pointer-events-auto hover:opacity-100 transition-all duration-500
             border-2
