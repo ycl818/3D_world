@@ -2,12 +2,12 @@ import { create } from "zustand";
 
 import PocketBase from "pocketbase";
 
-const pocketBaseUrl = import.meta.env.VITE_POCKET_BASE_URL;
+const pocketBaseUrl = import.meta.env.VITE_POCKETBASE_URL;
 if (!pocketBaseUrl) {
   throw new Error("VITE_POCKET_BASE_URL is not set");
 }
 
-const pb = new PocketBase(pocketBaseUrl);
+export const pb = new PocketBase(pocketBaseUrl);
 
 export const useCongfiguratorStore = create((set) => ({
   categories: [],
