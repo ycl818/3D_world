@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { pb, useCongfiguratorStore } from "../store";
+import { pb, useConfiguratorStore } from "../store";
 
 const AssetBox = () => {
   const {
@@ -9,7 +9,7 @@ const AssetBox = () => {
     fetchCategories,
     customization,
     changeAsset,
-  } = useCongfiguratorStore();
+  } = useConfiguratorStore();
 
   if (customization) {
     console.log("🚀 ~ AssetBox ~ customization:", customization);
@@ -57,11 +57,14 @@ const AssetBox = () => {
   );
 };
 const DownloadButton = () => {
+  const download = useConfiguratorStore((state) => state.download);
+
   return (
     <button
       className="rounded-lg bg-indigo-500 hover:bg-indigo-600 trnasition-colors duration-300
     text-white font-medium px-4 py-3 pointer-events-auto
     "
+      onClick={download}
     >
       Download
     </button>

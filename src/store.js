@@ -9,11 +9,13 @@ if (!pocketBaseUrl) {
 
 export const pb = new PocketBase(pocketBaseUrl);
 
-export const useCongfiguratorStore = create((set) => ({
+export const useConfiguratorStore = create((set) => ({
   categories: [],
   currentCategory: null,
   assets: [],
   customization: {},
+  download: () => {},
+  setDownload: (download) => set({ download }), // replace with new download function
   fetchCategories: async () => {
     const categories = await pb.collection("CustomizationGroups").getFullList({
       sort: "+position",
