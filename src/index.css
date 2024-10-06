@@ -12,3 +12,12 @@
 body {
   margin: 0;
 }
+
+.noscrollbar {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+}
+
+.noscrollbar::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}

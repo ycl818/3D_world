@@ -16,16 +16,16 @@ const AssetBox = () => {
   }, []);
 
   return (
-    <div className="rounded-2xl bg-white drop-shadow-md p-6 gap-6 flex flex-col">
-      <div className="flex items-center gap-6 pointer-events-auto">
+    <div className="rounded-t-lg bg-gradient-to-br from-black/30 to indigo-900/20 backdrop-blur-sm drop-shadow-md p-6 gap-6 flex flex-col">
+      <div className="flex items-center gap-8 pointer-events-auto overflow-x-auto noscrollbar px-6 pb-2">
         {categories?.map((category) => (
           <button
             key={category.id}
             onClick={() => setCurrentCategory(category)}
-            className={`transition-colors duration-200 font-medium ${
+            className={`transition-colors duration-200 font-medium flex-shrink-0 border-b ${
               currentCategory.name === category.name
-                ? "text-indigo-500"
-                : "text-gray-500 hover:text-gray-700"
+                ? "text-white shadow-purple-199 border-b-white"
+                : "text-gray-400 hover:text-gray-500 border-b-transparent"
             }`}
           >
             {category.name}
@@ -70,13 +70,13 @@ const DownloadButton = () => {
 
 const UI = () => {
   return (
-    <main className="pointer-events-none fixed z-10 inset-0 p-10">
+    <main className="pointer-events-none fixed z-10 inset-0 select-none">
       <div className="mx-auto h-full max-w-screen-xl w-full flex flex-col justify-between">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center p-10">
           <img className="w-20" src="/images/Creator.png" />
           <DownloadButton />
         </div>
-        <div className="flex flex-col gap-6">
+        <div className="px-10 flex flex-col ">
           <AssetBox />
         </div>
       </div>
