@@ -4,10 +4,27 @@
 // we need to map the scene to know the number of meshes in an asset
 
 import { useGLTF } from "@react-three/drei";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useConfiguratorStore } from "../store";
 
-const Asset = ({ url, skeleton }) => {
+const Asset = ({ url, skeleton, categoryName }) => {
   const { scene } = useGLTF(url);
+
+  const customization = useConfiguratorStore((state) => state.customization);
+
+  const assetColor = customization[categoryName].color;
+
+  const skin = useConfiguratorStore((state) => state.skin);
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child.isMesh) {
+        if (child.material?.name.includes("Color_")) {
+          child.material.color.set(assetColor);
+        }
+      }
+    });
+  }, [scene, assetColor]);
 
   const attachedItems = useMemo(() => {
     const items = [];
@@ -15,7 +32,9 @@ const Asset = ({ url, skeleton }) => {
       if (child.isMesh) {
         items.push({
           geometry: child.geometry,
-          material: child.material,
+          material: child.material.name.includes("Skin_")
+            ? skin
+            : child.material,
         });
       }
     });

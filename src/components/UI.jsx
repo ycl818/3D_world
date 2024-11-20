@@ -72,6 +72,12 @@ const DownloadButton = () => {
 };
 
 const UI = () => {
+  // to check if we have color to display
+  const currentCategory = useConfiguratorStore(
+    (state) => state.currentCategory
+  );
+  const customization = useConfiguratorStore((state) => state.customization);
+
   return (
     <main className="pointer-events-none fixed z-10 inset-0 select-none">
       <div className="mx-auto h-full max-w-screen-xl w-full flex flex-col justify-between">
@@ -80,10 +86,49 @@ const UI = () => {
           <DownloadButton />
         </div>
         <div className="px-10 flex flex-col ">
+          {currentCategory?.colorPalette &&
+            customization[currentCategory.name] && <ColorPicker />}
           <AssetBox />
         </div>
       </div>
     </main>
+  );
+};
+
+const ColorPicker = () => {
+  const updateColor = useConfiguratorStore((state) => state.updateColor);
+  const currentCategory = useConfiguratorStore(
+    (state) => state.currentCategory
+  );
+  const handleColorChange = (color) => {
+    updateColor(color);
+  };
+  const customization = useConfiguratorStore((state) => state.customization);
+
+  if (!customization[currentCategory.name]?.asset) {
+    return null;
+  }
+  return (
+    <div className="pointer-events-auto relative flex gap-2 max-w-full overflow-x-auto backdrop-blur-sm py-2 drop-shadow-md">
+      {currentCategory.expand?.colorPalette?.colors.map((color, index) => (
+        <button
+          key={`${index}-${color}`}
+          className={`w-10 h-10 p-1.5 drop-shadow-md bg-black/20 shrink-0 rounded-lg overflow-hidden transition-all duration-300 border-2
+            ${
+              customization[currentCategory.name].color === color
+                ? "border-white"
+                : "border-transparent"
+            }
+          `}
+          onClick={() => handleColorChange(color)}
+        >
+          <div
+            className="w-full h-full rounded-md"
+            style={{ backgroundColor: color }}
+          />
+        </button>
+      ))}
+    </div>
   );
 };
 

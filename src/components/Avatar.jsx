@@ -56,6 +56,7 @@ const Avatar = ({ ...props }) => {
               customization[key]?.asset?.url && (
                 <Suspense key={customization[key].asset.id}>
                   <Asset
+                    categoryName={key}
                     url={pb.files.getUrl(
                       customization[key].asset,
                       customization[key].asset.url
